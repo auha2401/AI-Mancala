@@ -3,22 +3,30 @@ import random
 from random import randint
 from mancala import Mancala
 
-p1counter = 0; # a counter for how many times player 1 wins
-p2counter = 0; # a counter for how many times player 2 wins
-tiecounter = 0; # a counter for how many times the players tie
+# win counters
+p1counter = 0 # a counter for how many times player 1 wins
+p2counter = 0 # a counter for how many times player 2 wins
+tiecounter = 0 # a counter for how many times the players tie
+
+# move counters
+p1moves = 0
+p2moves = 0
 
 for i in range(100):
     game = Mancala() # creating a new game every time
     
     # play until someone wins
     while(game.winning_eval() == (False, -1)):  
-        # player 1 plays
-        game.play(game.random_move_generator())
-        # print()
-        # game.display_board()
-
-        # player 2 plays
-        game.play(game.random_move_generator())
+        # determining player
+        player = game.current_player
+        
+        if(player == 1):
+            p1moves = p1moves + 1
+        else:
+            p2moves = p2moves + 1
+            
+            
+        game.play(game.random_move_generator()) 
         # print()
         # game.display_board()
         
@@ -40,3 +48,10 @@ for i in range(100):
 print("Player 1 won " + str(p1counter) + "% of the time.")
 print("Player 2 won " + str(p2counter) + "% of the time.")
 print("Ties occurred " + str(tiecounter) + "% of the time.")
+print()
+
+p1avgmoves = p1moves/100
+p2avgmoves = p2moves/100
+
+print("Player 1 won with an average of " + str(p1avgmoves) + " per game.")
+print("Player 2 won with an average of " + str(p2avgmoves) + " per game.")
