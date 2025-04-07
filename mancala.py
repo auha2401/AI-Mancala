@@ -218,3 +218,45 @@ class Mancala:
                 return (state, -1)
         
         return (state, pl)
+    
+    def utility(self):
+        return self.board[self.p1_mancala_index] - self.board[self.p2_mancala_index]
+    
+    def minimax(self, depth, max_depth, maximizing_player):
+        if depth == max_depth or self.winning_eval()[0]:
+            return self.utility(), None
+
+        if maximizing_player:  # Player 1 (Max)
+            best_value = float('-inf')
+            best_move = None
+            for pit in range(1, self.pits_per_player + 1):
+                if self.valid_move(pit):
+                    game_copy = Mancala(self.pits_per_player, 0)
+                    game_copy.board = self.board.copy()
+                    game_copy.current_player = self.current_player
+                    game_copy.play(pit)
+                    value, _ = game_copy.minimax(depth + 1, max_depth, False)
+                    if value > best_value:
+                        best_value = value
+                        best_move = pit
+            return best_value, best_move
+        else:  # Player 2 (Min)
+            best_value = float('inf')
+            best_move = None
+            for pit in range(1, self.pits_per_player + 1):
+                if self.valid_move(pit):
+                    game_copy = Mancala(self.pits_per_player, 0)
+                    game_copy.board = self.board.copy()
+                    game_copy.current_player = self.current_player
+                    game_copy.play(pit)
+                    value, _ = game_copy.minimax(depth + 1, max_depth, True)
+                    if value < best_value:
+                        best_value = value
+                        best_move = pit
+            return best_value, best_move
+
+    def get_best_move(self, max_depth):
+        _, move = self.minimax(0, max_depth, self.current_player == 1)
+        return move 
+        
+    

@@ -53,5 +53,5 @@ print()
 p1avgmoves = p1moves/100
 p2avgmoves = p2moves/100
 
-print("Player 1 won with an average of " + str(p1avgmoves) + " per game.")
-print("Player 2 won with an average of " + str(p2avgmoves) + " per game.")
+print("Player 1 won with an average of " + str(p1avgmoves) + " moves per game.")
+print("Player 2 won with an average of " + str(p2avgmoves) + " moves per game.")
