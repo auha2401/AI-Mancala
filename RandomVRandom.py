@@ -12,7 +12,9 @@ tiecounter = 0 # a counter for how many times the players tie
 p1moves = 0
 p2moves = 0
 
-for i in range(100):
+n = 100;
+
+for i in range(n):
     game = Mancala() # creating a new game every time
     
     # play until someone wins
@@ -45,13 +47,13 @@ for i in range(100):
     # print()
     # print()
     
-print("Player 1 won " + str(p1counter) + "% of the time.")
-print("Player 2 won " + str(p2counter) + "% of the time.")
-print("Ties occurred " + str(tiecounter) + "% of the time.")
+print("Player 1 won " + str(p1counter/n * 100) + "% of the time.")
+print("Player 2 won " + str(p2counter/n * 100) + "% of the time.")
+print("Ties occurred " + str(tiecounter/n * 100) + "% of the time.")
 print()
 
-p1avgmoves = p1moves/100
-p2avgmoves = p2moves/100
+p1avgmoves = p1moves/n
+p2avgmoves = p2moves/n
 
 print("Player 1 won with an average of " + str(p1avgmoves) + " per game.")
 print("Player 2 won with an average of " + str(p2avgmoves) + " per game.")
