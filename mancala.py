@@ -307,4 +307,3 @@ class Mancala:
     def alpha_beta_move(self, max_depth):
         _, move = self.alpha_beta(0, float('-inf'), float('inf'), max_depth, self.current_player == 1)
         return move
-    
