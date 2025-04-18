@@ -1,6 +1,3 @@
-import random
-from random import randint
-
 class Mancala:
     def __init__(self, pits_per_player=6, stones_per_pit = 4):
         """
@@ -121,16 +118,21 @@ class Mancala:
                 # make sure that pit is not opponent's mancala
                 if(nextpit == self.p2_mancala_index):
                     nextpit = (nextpit + 1) % (len(self.board))
-                self.board[nextpit] += 1 # deposting a marble
+                    
                 # if on last move
                 if(i == (moves)): 
-                    if(self.board[nextpit] == 0): # empty
-                        opp_pit = abs(self.pits_per_player - nextpit)
-                        opp_pit = opp_pit + self.pits_per_player + 1 # adjusting to index
-                        extras = self.board[opp_pit]
-                        self.board[opp_pit] = 0
-                        # place these in my mancala
-                        self.board[self.p1_mancala_index] += extras
+                    if(self.board[nextpit] == 0): # the next pit is empty
+                        # check if it is our side but not our mancala
+                        if(nextpit in range(self.p1_pits_index[0], self.p1_pits_index[1] + 1)):
+                            # print("Capture!")
+                            opp_pit = 2*self.pits_per_player - nextpit
+                            extras = self.board[opp_pit] + 1 # taking the current marble as well
+                            self.board[opp_pit] = 0
+                            # place these in my mancala
+                            self.board[self.p1_mancala_index] += extras
+                            break
+
+                self.board[nextpit] += 1 # depositing a marble
                         
             # switching to player 2
             self.current_player = 2
@@ -145,21 +147,24 @@ class Mancala:
                 # make sure that pit is not opponent's mancala
                 if(nextpit == self.p1_mancala_index):
                     nextpit = (nextpit + 1) % (len(self.board))
-                self.board[nextpit] += 1 # deposting a marble
                 # if on last move
                 if(i == (moves)): 
-                    if(self.board[nextpit] == 0): # empty
-                        opp_pit = abs(self.pits_per_player - nextpit)
-                        opp_pit = opp_pit -  1 # adjusting to index
-                        extras = self.board[opp_pit]
-                        self.board[opp_pit] = 0
-                        # place these in my mancala
-                        self.board[self.p2_mancala_index] += extras
+                    if(self.board[nextpit] == 0): # the next pit is empty
+                        # check if it is our side but not our mancala
+                        if(nextpit in range(self.p2_pits_index[0], self.p2_pits_index[1] + 1)):
+                            # print("Capture!")
+                            opp_pit = 2*self.pits_per_player - nextpit
+                            extras = self.board[opp_pit] + 1 # taking the current marble as well
+                            self.board[opp_pit] = 0
+                            # place these in my mancala
+                            self.board[self.p2_mancala_index] += extras
+                            break
+                            
+                self.board[nextpit] += 1 # deposting a marble
                         
             # switching to player 1
             self.current_player = 1
-                
-        
+                   
         return self.board
     
     def winning_eval(self):
@@ -167,13 +172,15 @@ class Mancala:
         Function to verify if the game board has reached the winning state.
         Hint: If either of the players' pits are all empty, then it is considered a winning state.
         """
-        # if a player's side is empty, the game is over, and whoever has the most stones in their mancala wins
+        # if a player's side is empty, the game is over
+        # the player who still has stones on their side of the board places these into their mancala
+        # whoever has the most stones in their mancala wins
         state = True
+        pl = -1
         
         for i in range(self.pits_per_player): # player one's side is empty
             if (self.board[i] != 0):
                 state = False
-                pl = -1
                 
         if(state == True):
             # count the number of stones on player two's side, adding these to their mancala
@@ -191,13 +198,12 @@ class Mancala:
                 return (state, 2)
             else:
                 # tie
-                return (state, -1)
+                return (state, 0)
     
         state = True
         for i in range(self.pits_per_player): # player two's side is empty
             if (self.board[self.pits_per_player + 1 + i] != 0):
                 state = False
-                pl = -1
                 
         if (state == True):
             # count the number of stones on player one's side, adding these to their mancala
@@ -215,10 +221,10 @@ class Mancala:
                 return (state, 2)
             else:
                 # tie
-                return (state, -1)
+                return (state, 0)
         
         return (state, pl)
-    
+
     def utility(self):
         return self.board[self.p1_mancala_index] - self.board[self.p2_mancala_index]
     

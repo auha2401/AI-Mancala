@@ -12,7 +12,7 @@ ties = 0
 ai_moves = 0
 random_moves = 0
 
-max_depth = 5  # Number of plies
+max_depth = 7  # Number of plies
 
 start_time = time.perf_counter()
 
