@@ -237,9 +237,7 @@ class Mancala:
             best_move = None
             for pit in range(1, self.pits_per_player + 1):
                 if self.valid_move(pit):
-                    game_copy = Mancala(self.pits_per_player, 0)
-                    game_copy.board = self.board.copy()
-                    game_copy.current_player = self.current_player
+                    game_copy = deepcopy(self)
                     game_copy.play(pit)
                     value, _ = game_copy.minimax(depth + 1, max_depth, False)
                     if value > best_value:
@@ -251,9 +249,7 @@ class Mancala:
             best_move = None
             for pit in range(1, self.pits_per_player + 1):
                 if self.valid_move(pit):
-                    game_copy = Mancala(self.pits_per_player, 0)
-                    game_copy.board = self.board.copy()
-                    game_copy.current_player = self.current_player
+                    game_copy = deepcopy(self)
                     game_copy.play(pit)
                     value, _ = game_copy.minimax(depth + 1, max_depth, True)
                     if value < best_value:
@@ -274,9 +270,7 @@ class Mancala:
             best_move = None
             for pit in range(1, self.pits_per_player + 1):
                 if self.valid_move(pit):
-                    game_copy = Mancala(self.pits_per_player, 0)
-                    game_copy.board = self.board.copy()
-                    game_copy.current_player = self.current_player
+                    game_copy = deepcopy(self)
                     game_copy.play(pit)
                     value, _ = game_copy.alpha_beta(depth + 1, alpha, beta, max_depth, False)
                     if value > best_value:
@@ -294,9 +288,7 @@ class Mancala:
             best_move = None
             for pit in range(1, self.pits_per_player + 1):
                 if self.valid_move(pit):
-                    game_copy = Mancala(self.pits_per_player, 0)
-                    game_copy.board = self.board.copy()
-                    game_copy.current_player = self.current_player
+                    game_copy = deepcopy(self)
                     game_copy.play(pit)
                     value, _ = game_copy.alpha_beta(depth + 1, alpha, beta, max_depth, True)
                     if value < best_value:
